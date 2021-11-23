@@ -1,0 +1,98 @@
+@page
+@model LocalPhoneAdmin.Areas.City.Pages.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h3>All cities</h3>
+
+    <form asp-page="./Index" method="get">
+        <div class="form-actions no-color text-right">
+            <p>
+                Find by description:
+                <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </p>
+        </div>
+    </form>
+    <form id="createNewForm" class="form-inline">
+        <button id="createNew" type="submit" asp-page="Create" class="btn btn-primary">Create New</button>
+    </form>
+    <p></p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.PhonecodeSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.CityPaginatedList[0].Phonecode)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.DescriptionSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.CityPaginatedList[0].Description)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.StateDescriptionSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        State @Html.DisplayNameFor(model => model.CityPaginatedList[0].State.Name)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.StateAbbreviationSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        State @Html.DisplayNameFor(model => model.CityPaginatedList[0].State.Abbreviation)
+                    </a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CityPaginatedList)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phonecode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State.Abbreviation)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    var prevDisabled = !Model.CityPaginatedList.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.CityPaginatedList.HasNextPage ? "disabled" : "";
+
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.CityPaginatedList.CurrentPageIndex - 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-primary @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.CityPaginatedList.CurrentPageIndex + 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-primary @nextDisabled">
+        Next
+    </a>
+}

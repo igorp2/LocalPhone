@@ -1,0 +1,68 @@
+@page
+@model LocalPhoneAdmin.Areas.Country.Pages.EditModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CountryModel.Id" />
+                <div class="form-group">
+                    <label asp-for="CountryModel.Phonecode" class="control-label"></label>
+                    <input asp-for="CountryModel.Phonecode" class="form-control" />
+                    <span asp-validation-for="CountryModel.Phonecode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CountryModel.Name" class="control-label"></label>
+                    <input asp-for="CountryModel.Name" class="form-control" />
+                    <span asp-validation-for="CountryModel.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CountryModel.Nicename" class="control-label"></label>
+                    <input asp-for="CountryModel.Nicename" class="form-control" />
+                    <span asp-validation-for="CountryModel.Nicename" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                    <label asp-for="CountryModel.Iso" class="control-label"></label>
+                    <input asp-for="CountryModel.Iso" class="form-control" />
+                    <span asp-validation-for="CountryModel.Iso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CountryModel.Iso3" class="control-label"></label>
+                    <input asp-for="CountryModel.Iso3" class="form-control" />
+                    <span asp-validation-for="CountryModel.Iso3" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CountryModel.Numcode" class="control-label"></label>
+                    <input asp-for="CountryModel.Numcode" class="form-control" />
+                    <span asp-validation-for="CountryModel.Numcode" class="text-danger"></span>
+                </div>*@
+                <input asp-for="CountryModel.Status" class="form-control" type="hidden" />
+                <input asp-for="CountryModel.CreationDate" class="form-control" type="hidden" />
+                <input asp-for="CountryModel.CreatorUser" class="form-control" type="hidden" />
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

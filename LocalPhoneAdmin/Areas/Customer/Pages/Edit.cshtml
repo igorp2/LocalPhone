@@ -1,0 +1,81 @@
+@page
+@model LocalPhoneAdmin.Areas.Customer.Pages.EditModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h3>Edit Customer</h3>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="CustomerModel.PhoneNumber" />
+                <input asp-for="CustomerModel.Status" class="form-control" type="hidden" />
+                <input asp-for="CustomerModel.CreationDate" class="form-control" type="hidden" />
+                <input asp-for="CustomerModel.CreatorUser" class="form-control" type="hidden" />
+                <div class="form-group">
+                    <label asp-for="CustomerModel.FirstName" class="control-label"></label>
+                    <input asp-for="CustomerModel.FirstName" class="form-control" />
+                    <span asp-validation-for="CustomerModel.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerModel.LastName" class="control-label"></label>
+                    <input asp-for="CustomerModel.LastName" class="form-control" />
+                    <span asp-validation-for="CustomerModel.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerModel.DateOfBirth" class="control-label"></label>
+                    <input asp-for="CustomerModel.DateOfBirth" class="form-control" />
+                    <span asp-validation-for="CustomerModel.DateOfBirth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerModel.Email" class="control-label"></label>
+                    <input asp-for="CustomerModel.Email" class="form-control" />
+                    <span asp-validation-for="CustomerModel.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerModel.OperationalSystem" class="control-label"></label>
+                    <input asp-for="CustomerModel.OperationalSystem" class="form-control" />
+                    <span asp-validation-for="CustomerModel.OperationalSystem" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerModel.PublishedAppVersion" class="control-label"></label>
+                    <input asp-for="CustomerModel.PublishedAppVersion" class="form-control" />
+                    <span asp-validation-for="CustomerModel.PublishedAppVersion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerModel.Country" class="control-label"></label>
+
+                    <select asp-for="CustomerModel.IdCountry" class="form-control"
+                            asp-items="@Model.SelectList">
+                        <option value="">-- Select Country --</option>
+                    </select>
+
+                    <span asp-validation-for="CustomerModel.IdCountry" class="text-danger" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}

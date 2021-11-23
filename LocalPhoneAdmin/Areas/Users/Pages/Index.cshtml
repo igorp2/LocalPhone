@@ -1,0 +1,90 @@
+@page
+@model LocalPhoneAdmin.Areas.Users.Pages.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h3>All Users</h3>
+
+    <form asp-page="./Index" method="get">
+        <div class="form-actions no-color text-right">
+            <p>
+                Find by email:
+                <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </p>
+        </div>
+    </form>
+    <form id="createNewForm" class="form-inline">
+        <a href="/Identity/Account/Register" id="createNew" type="submit" class="btn btn-primary">Create New</a>
+    </form>
+    <p></p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.FirstnameSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        First Name
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.LastNameSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Last Name
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.EmailSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.UserModelList[0].Email)
+                    </a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserModelList)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-email="@item.Email">Edit</a> |
+                    <a asp-page="./Details" asp-route-email="@item.Email">Details</a> |
+                    <a asp-page="./Delete" asp-route-email="@item.Email">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    var prevDisabled = !Model.UserModelList.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.UserModelList.HasNextPage ? "disabled" : "";
+
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.UserModelList.CurrentPageIndex - 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-primary @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.UserModelList.CurrentPageIndex + 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-primary @nextDisabled">
+        Next
+    </a>
+}

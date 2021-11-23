@@ -1,0 +1,45 @@
+@page
+@model LocalPhoneAdmin.Areas.State.Pages.DetailsModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h1>Details</h1>
+
+    <div>
+        <h4>StateModel</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StateModel.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StateModel.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StateModel.Abbreviation)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StateModel.Abbreviation)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StateModel.Country)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StateModel.Country.Name)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-page="./Edit" asp-route-id="@Model.StateModel.Id">Edit</a> |
+        <a asp-page="./Index">Back to List</a>
+    </div>
+}

@@ -1,0 +1,46 @@
+@page
+@model LocalPhoneAdmin.Areas.Users.Pages.DetailsModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h3>User Details</h3>
+
+    <div>
+        <dl class="row">
+            <dt class="col-sm-3">
+                First Name
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.UserModel.Firstname)
+            </dd>
+            <dt class="col-sm-3">
+                Last Name
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.UserModel.LastName)
+            </dd>
+           
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.UserModel.Email)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.UserModel.Email)
+            </dd>
+        </dl>
+    </div>
+
+   
+    <div>
+        <a asp-page="./Edit" asp-route-email="@Model.UserModel.Email">Edit</a> |
+        <a asp-page="./Index">Back to List</a>
+    </div>
+}

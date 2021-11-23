@@ -1,0 +1,63 @@
+@page
+@model LocalPhoneAdmin.Areas.Gender.Pages.EditModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="GenderModel.Gender" class="control-label"></label>
+                    <input asp-for="GenderModel.Gender" class="form-control" />
+                    <span asp-validation-for="GenderModel.Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GenderModel.Abbreviation" class="control-label"></label>
+                    <input asp-for="GenderModel.Abbreviation" class="form-control" />
+                    <span asp-validation-for="GenderModel.Abbreviation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GenderModel.Description" class="control-label"></label>
+                    <input asp-for="GenderModel.Description" class="form-control" />
+                    <span asp-validation-for="GenderModel.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GenderModel.Country" class="control-label"></label>
+
+                    <select asp-for="GenderModel.IdCountry" class="form-control"
+                            asp-items="@Model.SelectList">
+                        <option value="">-- Select Country --</option>
+                    </select>
+
+                    <span asp-validation-for="GenderModel.IdCountry" class="text-danger" />
+                </div>
+                <input type="hidden" asp-for="GenderModel.Id" />
+
+                <input asp-for="GenderModel.Status" class="form-control" type="hidden" />
+                <input asp-for="GenderModel.CreationDate" class="form-control" type="hidden" />
+                <input asp-for="GenderModel.CreatorUser" class="form-control" type="hidden" />
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql.local",
+      "connectionId": "LocalPhoneAdminContextConnection"
+    },
+    "mssql2": {
+      "type": "mssql.local",
+      "connectionId": "CountryContext"
+    },
+    "mssql3": {
+      "type": "mssql.local",
+      "connectionId": "CityContext"
+    },
+    "mssql4": {
+      "type": "mssql.local",
+      "connectionId": "City2Context"
+    },
+    "mssql5": {
+      "type": "mssql.local",
+      "connectionId": "StatusContext"
+    },
+    "mssql6": {
+      "type": "mssql.local",
+      "connectionId": "StateContext"
+    },
+    "mssql7": {
+      "type": "mssql.local",
+      "connectionId": "GenderContext"
+    }
+  }
+}

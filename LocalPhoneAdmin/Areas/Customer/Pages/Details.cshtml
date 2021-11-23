@@ -1,0 +1,104 @@
+@page
+@model LocalPhoneAdmin.Areas.Customer.Pages.DetailsModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h3>Customer Details</h3>
+
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.PhoneNumber)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.PhoneNumber)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.FirstName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.FirstName)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.LastName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.LastName)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.DateOfBirth)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.DateOfBirth)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.Email)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.Email)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.OperationalSystem)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.OperationalSystem)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.PublishedAppVersion)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.PublishedAppVersion)
+            </dd>
+        </dl>
+    </div>
+
+    <dt>Customer @Html.DisplayNameFor(model => model.CustomerModel.Addresses)</dt>
+    <ul class="row flex-column">
+
+        @if (Model.CustomerModel.Addresses != null && Model.CustomerModel.Addresses.Any())
+        {
+            @foreach (var item in Model.CustomerModel.Addresses)
+            {
+                <li class="col-sm-3">@Html.DisplayNameFor(model => item.Zip)</li>
+                <li class="col-sm-9">@Html.DisplayFor(model => item.Zip)</li>
+                <li class="col-sm-3">@Html.DisplayNameFor(model => item.Street)</li>
+                <li class="col-sm-9">@Html.DisplayFor(model => item.Street)</li>
+                <li class="col-sm-3">@Html.DisplayNameFor(model => item.Note)</li>
+                <li class="col-sm-9">@Html.DisplayFor(model => item.Note)</li>
+            }
+        } 
+        else
+        {
+            <li>Nothing to show</li>
+        }
+    </ul>
+
+    <dt>Customer @Html.DisplayNameFor(model => model.CustomerModel.Numbers)</dt>
+    <ul class="row flex-column">
+        @if (Model.CustomerModel.Numbers != null && Model.CustomerModel.Numbers.Any())
+        {
+            @foreach (var item in Model.CustomerModel.Numbers)
+            {
+                <li class="col-sm-12">@Html.DisplayFor(model => item.PhoneNumber)</li>
+            }
+        } 
+        else
+        {
+            <li>Nothing to show</li>
+        }
+    </ul>
+    <div>
+        <a asp-page="./Edit" asp-route-phonenumber="@Model.CustomerModel.PhoneNumber">Edit</a> |
+        <a asp-page="./Index">Back to List</a>
+    </div>
+}

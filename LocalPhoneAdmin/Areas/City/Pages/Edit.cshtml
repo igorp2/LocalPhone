@@ -1,0 +1,59 @@
+@page
+@model LocalPhoneAdmin.Areas.City.EditModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CityModel.Id" />
+                <input asp-for="CityModel.Status" class="form-control" type="hidden" />
+                <input asp-for="CityModel.CreationDate" class="form-control" type="hidden" />
+                <input asp-for="CityModel.CreatorUser" class="form-control" type="hidden" />
+                <div class="form-group">
+                    <label asp-for="CityModel.Phonecode" class="control-label"></label>
+                    <input asp-for="CityModel.Phonecode" class="form-control" />
+                    <span asp-validation-for="CityModel.Phonecode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CityModel.Description" class="control-label"></label>
+                    <input asp-for="CityModel.Description" class="form-control" />
+                    <span asp-validation-for="CityModel.Description" class="text-danger"></span>
+        </div>
+                <div class="form-group">
+                    <label asp-for="CityModel.State" class="control-label"></label>
+
+                    <select asp-for="CityModel.IdState" class="form-control"
+                            asp-items="@Model.SelectList">
+                        <option value="">-- Select State --</option>
+                    </select>
+
+                    <span asp-validation-for="CityModel.IdState" class="text-danger" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}

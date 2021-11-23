@@ -1,0 +1,58 @@
+@page
+@model LocalPhoneAdmin.Areas.State.Pages.EditModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="StateModel.Name" class="control-label"></label>
+                    <input asp-for="StateModel.Name" class="form-control" />
+                    <span asp-validation-for="StateModel.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StateModel.Abbreviation" class="control-label"></label>
+                    <input asp-for="StateModel.Abbreviation" class="form-control" />
+                    <span asp-validation-for="StateModel.Abbreviation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StateModel.Country" class="control-label"></label>
+
+                    <select asp-for="StateModel.IdCountry" class="form-control"
+                            asp-items="@Model.SelectList">
+                        <option value="">-- Select Country --</option>
+                    </select>
+
+                    <span asp-validation-for="StateModel.IdCountry" class="text-danger" />
+                </div>
+                <input type="hidden" asp-for="StateModel.Id" />
+                <input asp-for="StateModel.Status" class="form-control" type="hidden" />
+                <input asp-for="StateModel.CreationDate" class="form-control" type="hidden" />
+                <input asp-for="StateModel.CreatorUser" class="form-control" type="hidden" />
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

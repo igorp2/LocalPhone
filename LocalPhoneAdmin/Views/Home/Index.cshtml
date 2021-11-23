@@ -1,0 +1,19 @@
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1 class="display-4">Welcome</h1>
+        <p>
+            Lorem ipsum rhoncus auctor aliquam class laoreet, aenean pharetra dictum sed magna, tristique torquent ornare eu fames. enim sagittis aenean senectus sem ut molestie, elementum cras accumsan massa sodales donec, consectetur aptent lectus turpis fusce. aenean hac sem pretium diam ultricies ad viverra consequat, suscipit placerat quisque fermentum himenaeos suscipit malesuada eros, phasellus vestibulum platea enim vel malesuada lorem. consequat risus conubia rhoncus nulla gravida dapibus porttitor tempor mi aenean feugiat nisi tristique lorem laoreet massa viverra, quis quisque dolor lacus mattis aliquet integer lectus fermentum convallis ad placerat aenean ac primis.
+        </p>
+    }
+</div>

@@ -1,0 +1,84 @@
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="navbar-collapse collapse justify-content-between">
+        <ul class="navbar-nav mr-auto">
+            @*<li class=" dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
+                <ul class="dropdown-menu ">
+                    <li class="nav-item">
+                        <a asp-area="User" class="nav-link">
+                            User
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Rule" class="nav-link">
+                            Rule
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <text> &nbsp; &nbsp; &nbsp;</text>*@
+            <li class=" dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registration<span class="caret"></span></a>
+                <ul class="dropdown-menu ">
+                    <li class="nav-item">
+                        <a asp-area="Country" class="nav-link">
+                            Country
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="State" class="nav-link">
+                            State
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="City" class="nav-link">
+                            City
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Gender" class="nav-link">
+                            Gender
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="AvailableNumber" class="nav-link">
+                            Available Number
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <text> &nbsp; &nbsp; &nbsp;</text>
+            <li class=" dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
+                <ul class="dropdown-menu ">
+                    <li class="nav-item">
+                        <a asp-area="Customer" class="nav-link">
+                            Customer
+                        </a>
+                        <li class="nav-item">
+                        <a asp-area="Users" class="nav-link">
+                            Users
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+           <ul class="navbar-nav">
+            <li class="nav-item">
+                <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manager">@UserManager.GetUserAsync(User).Result.Firstname</a>
+            </li>
+            <li class="nav-item">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="btn btn-primary">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+}

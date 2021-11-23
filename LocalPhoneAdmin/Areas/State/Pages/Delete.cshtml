@@ -1,0 +1,50 @@
+@page
+@model LocalPhoneAdmin.Areas.State.Pages.DeleteModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>StateModel</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StateModel.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StateModel.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StateModel.Abbreviation)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StateModel.Abbreviation)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StateModel.Country)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StateModel.Country.Name)
+            </dd>
+        </dl>
+
+        <input asp-for="StateModel.Status" class="form-control" type="hidden" />
+        <input asp-for="StateModel.CreationDate" class="form-control" type="hidden" />
+        <input asp-for="StateModel.CreatorUser" class="form-control" type="hidden" />
+
+        <form method="post">
+            <input type="hidden" asp-for="StateModel.Id" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-page="./Index">Back to List</a>
+        </form>
+    </div>
+}

@@ -1,0 +1,58 @@
+@page
+@model LocalPhoneAdmin.Areas.AvailableNumber.Pages.EditModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>               
+                <div class="form-group">
+                    <label asp-for="AvailableNumberModel.Country" class="control-label"></label>
+
+                    <select asp-for="AvailableNumberModel.idCountry" class="form-control"
+                            asp-items="@Model.SelectList">
+                        <option value="">-- Select Country --</option>
+                    </select>
+
+                    <span asp-validation-for="AvailableNumberModel.idCountry" class="text-danger" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="AvailableNumberModel.idCity" class="control-label"></label>
+                    <input asp-for="AvailableNumberModel.idCity" class="form-control" />
+                    <span asp-validation-for="AvailableNumberModel.idCity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AvailableNumberModel.phoneNumber" class="control-label"></label>
+                    <input asp-for="AvailableNumberModel.phoneNumber" class="form-control" />
+                    <span asp-validation-for="AvailableNumberModel.phoneNumber" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="AvailableNumberModel.Id" />
+
+                <input asp-for="AvailableNumberModel.Status" class="form-control" type="hidden" />
+                <input asp-for="AvailableNumberModel.CreationDate" class="form-control" type="hidden" />
+                <input asp-for="AvailableNumberModel.CreatorUser" class="form-control" type="hidden" />
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

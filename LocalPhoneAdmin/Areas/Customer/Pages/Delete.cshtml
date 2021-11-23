@@ -1,0 +1,73 @@
+@page
+@model LocalPhoneAdmin.Areas.Customer.Pages.DeleteModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Customer informations</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.PhoneNumber)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.PhoneNumber)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.FirstName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.FirstName)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.LastName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.LastName)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.DateOfBirth)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.DateOfBirth)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.Email)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.Email)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.OperationalSystem)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.OperationalSystem)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CustomerModel.PublishedAppVersion)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CustomerModel.PublishedAppVersion)
+            </dd>
+        </dl>
+
+        <form method="post">
+            <input type="hidden" asp-for="CustomerModel.PhoneNumber" />
+            <input asp-for="CustomerModel.Status" class="form-control" type="hidden" />
+            <input asp-for="CustomerModel.CreationDate" class="form-control" type="hidden" />
+            <input asp-for="CustomerModel.CreatorUser" class="form-control" type="hidden" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-page="./Index">Back to List</a>
+        </form>
+    </div>
+}

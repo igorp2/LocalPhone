@@ -1,0 +1,118 @@
+@page
+@model LocalPhoneAdmin.Areas.Country.Pages.IndexModel
+
+@using Microsoft.AspNetCore.Identity
+@using LocalPhoneDomain.Areas.Identity.Data
+
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h3>All countries</h3>
+
+    <form asp-page="./Index" method="get">
+        <div class="form-actions no-color text-right">
+            <p>
+                Find by name:
+                <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </p>
+        </div>
+    </form>
+    <form id="createNewForm" class="form-inline">
+        <button id="createNew" type="submit" asp-page="Create" class="btn btn-primary">Create New</button>
+    </form>
+    <p></p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.PhonecodeSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.CountryPaginatedList[0].Phonecode)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.CountryPaginatedList[0].Name)
+                    </a>
+                </th>
+                @*<th>
+                        <a asp-page="./Index" asp-route-sortOrder="@Model.NicenameSort" asp-route-currentFilter="@Model.CurrentFilter">
+                            @Html.DisplayNameFor(model => model.CountryModel[0].Nicename)
+                        </a>
+                    </th>*@
+                @*<th>
+                        <a asp-page="./Index" asp-route-sortOrder="@Model.IsoSort" asp-route-currentFilter="@Model.CurrentFilter">
+                            @Html.DisplayNameFor(model => model.CountryModel[0].Iso)
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-page="./Index" asp-route-sortOrder="@Model.Iso3Sort" asp-route-currentFilter="@Model.CurrentFilter">
+                            @Html.DisplayNameFor(model => model.CountryModel[0].Iso3)
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-page="./Index" asp-route-sortOrder="@Model.NumcodeSort" asp-route-currentFilter="@Model.CurrentFilter">
+                            @Html.DisplayNameFor(model => model.CountryModel[0].Numcode)
+                        </a>
+                    </th>*@
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CountryPaginatedList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phonecode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Nicename)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Iso)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Iso3)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Numcode)
+                        </td>*@
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    var prevDisabled = !Model.CountryPaginatedList.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.CountryPaginatedList.HasNextPage ? "disabled" : "";
+
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.CountryPaginatedList.CurrentPageIndex - 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-primary @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.CountryPaginatedList.CurrentPageIndex + 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-primary @nextDisabled">
+        Next
+    </a>
+
+}
